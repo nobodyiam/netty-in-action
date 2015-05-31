@@ -11,7 +11,40 @@
     <modules>
         <module>netty-web</module>
         <module>java-nio</module>
+        <module>netty</module>
     </modules>
+    <properties>
+        <java.src.version>1.6</java.src.version>
+        <java.target.version>1.6</java.target.version>
+        <project.encoding>UTF-8</project.encoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <servlet.version>2.4</servlet.version>
+        <netty.version>4.0.28.Final</netty.version>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <optimize>true</optimize>
+                    <source>${java.src.version}</source>
+                    <target>${java.target.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
