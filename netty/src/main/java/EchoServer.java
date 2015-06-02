@@ -31,7 +31,7 @@ public class EchoServer {
                         }
                     });
 
-            ChannelFuture f = b.bind().sync();// the call to the “sync()” method will cause this to block until the server is bound
+            ChannelFuture f = b.bind().sync();// the call to the "sync()" method will cause this to block until the server is bound
             System.out.println(EchoServer.class.getName() + " started and listen on " + f.channel().localAddress());
             f.channel().closeFuture().sync();
         } finally {
