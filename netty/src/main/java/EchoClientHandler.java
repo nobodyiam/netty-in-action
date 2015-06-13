@@ -5,12 +5,16 @@ import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.CharsetUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by Jason on 6/2/15.
  */
 @Sharable // Annotate with @Sharable as it can be shared between channels
 public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
+    private static final Logger logger = LoggerFactory.getLogger(EchoClientHandler.class);
+
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         cause.printStackTrace();
@@ -27,7 +31,7 @@ public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
-        System.out.println("Client received: " + ByteBufUtil.hexDump(in.readBytes(in.readableBytes()))); // Log received message as hexdump
+        logger.info("Client received: " + ByteBufUtil.hexDump(in.readBytes(in.readableBytes()))); // Log received message as hexdump
 
     }
 }

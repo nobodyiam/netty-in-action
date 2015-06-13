@@ -5,12 +5,15 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
  * Created by Jason on 6/2/15.
  */
 public class EchoClient {
+    private static final Logger logger = LoggerFactory.getLogger(EchoClient.class);
     private final String host;
     private final int port;
 
@@ -34,7 +37,7 @@ public class EchoClient {
                         }
                     });
             ChannelFuture f = b.connect().sync(); // Connect client to remote peer; wait until sync() completes connect completes
-            System.out.println(this.getClass().getName() + " started and connected to " + f.channel().remoteAddress() + " local address: " + f.channel().localAddress());
+            logger.info(this.getClass().getName() + " started and connected to " + f.channel().remoteAddress() + " local address: " + f.channel().localAddress());
             f.channel().closeFuture().sync(); // Wait until ClientChannel closes. This will block.
         } finally {
             group.shutdownGracefully().sync(); // Shut down bootstrap and thread pools; release all resources
@@ -43,7 +46,7 @@ public class EchoClient {
 
     public static void main(String[] args) throws InterruptedException {
         if (args.length != 2) {
-            System.err.print("Usage: " + EchoClient.class.getSimpleName() + " <host> <port>");
+            logger.error("Usage: " + EchoClient.class.getSimpleName() + " <host> <port>");
             return;
         }
 
