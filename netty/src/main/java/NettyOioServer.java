@@ -22,26 +22,26 @@ public class NettyOioServer {
         EventLoopGroup group = new OioEventLoopGroup();
 
         try {
-            ServerBootstrap b = new ServerBootstrap();
+            ServerBootstrap b = new ServerBootstrap(); // Create ServerBootstrap to allow bootstrap to server instance
             b.group(group)
-                    .channel(OioServerSocketChannel.class)
+                    .channel(OioServerSocketChannel.class) // Use OioEventLoopGroup Ito allow blocking mode (Old-IO)
                     .localAddress(port)
-                    .childHandler(new ChannelInitializer<SocketChannel>() {
+                    .childHandler(new ChannelInitializer<SocketChannel>() { // Specify ChannelInitializer that will be called for each accepted connection
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast(new ChannelInboundHandlerAdapter() {
+                            ch.pipeline().addLast(new ChannelInboundHandlerAdapter() { // Add ChannelHandler to intercept events and allow to react on them
                                 @Override
                                 public void channelActive(ChannelHandlerContext ctx) throws Exception {
                                     ctx.writeAndFlush(buf.duplicate())
-                                            .addListener(ChannelFutureListener.CLOSE);
+                                            .addListener(ChannelFutureListener.CLOSE); // Write message to client and add ChannelFutureListener to close connection once message written
                                 }
                             });
                         }
                     });
-            ChannelFuture f = b.bind().sync();
+            ChannelFuture f = b.bind().sync(); // Bind server to accept connections
             f.channel().closeFuture().sync();
         } finally {
-            group.shutdownGracefully().sync();
+            group.shutdownGracefully().sync(); // Release all resources
         }
     }
 
