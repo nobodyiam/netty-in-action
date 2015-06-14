@@ -1,6 +1,7 @@
 import com.google.common.base.Charsets;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -33,6 +34,7 @@ public class NettyNioServer {
                             ch.pipeline().addLast(new ChannelInboundHandlerAdapter() { // Add ChannelHandler to intercept events and allow to react on them
                                 @Override
                                 public void channelActive(ChannelHandlerContext ctx) throws Exception {
+                                    logger.info(ByteBufUtil.hexDump(buf));
                                     ctx.writeAndFlush(buf.duplicate())
                                             .addListener(ChannelFutureListener.CLOSE); // Write message to client and add ChannelFutureListener to close connection once message written
                                 }
