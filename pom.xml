@@ -14,8 +14,8 @@
         <module>netty</module>
     </modules>
     <properties>
-        <java.src.version>1.6</java.src.version>
-        <java.target.version>1.6</java.target.version>
+        <java.src.version>1.7</java.src.version>
+        <java.target.version>1.7</java.target.version>
         <project.encoding>UTF-8</project.encoding>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -54,6 +54,16 @@
                 <groupId>org.slf4j</groupId>
                 <artifactId>slf4j-log4j12</artifactId>
                 <version>1.7.12</version>
+            </dependency>
+            <dependency>
+                <groupId>org.eclipse.jetty.npn</groupId>
+                <artifactId>npn-api</artifactId>
+                <version>1.1.1.v20141010</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mortbay.jetty.npn</groupId>
+                <artifactId>npn-boot</artifactId>
+                <version>1.1.11.v20150415</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
