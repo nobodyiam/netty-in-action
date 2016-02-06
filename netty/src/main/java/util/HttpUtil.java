@@ -22,7 +22,7 @@ public class HttpUtil {
             response.headers().set(HttpHeaders.Names.CONNECTION, HttpHeaders.Values.KEEP_ALIVE);
         }
 
-        ctx.write(response); // Write the HttpRequest to the client. Be aware that we use a HttpRequest and not a FullHttpRequest as it is only the first part of the request. Also we not use writeAndFlush(..) as this should be done later.
+        ctx.write(response);
 
         ctx.write(Unpooled.copiedBuffer(content, Charsets.UTF_8));
 
