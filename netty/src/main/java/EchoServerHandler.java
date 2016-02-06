@@ -17,13 +17,16 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         logger.info("Server received: " + msg);
 
-        ctx.write(msg); // Write the received messages back . Be aware that this will not “flush” the messages to the remote peer yet.
+//        ctx.write(msg); // Write the received messages back . Be aware that this will not “flush” the messages to the remote peer yet.
+        ctx.pipeline().write(msg);
     }
 
     @Override
     public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-        ctx.writeAndFlush(Unpooled.EMPTY_BUFFER)
-                .addListener(ChannelFutureListener.CLOSE); // Flush all previous written messages (that are pending) to the remote peer, and close the channel after the operation is complete.
+//        ctx.writeAndFlush(Unpooled.EMPTY_BUFFER)
+//                .addListener(ChannelFutureListener.CLOSE); // Flush all previous written messages (that are pending) to the remote peer, and close the channel after the operation is complete.
+        ctx.pipeline().writeAndFlush(Unpooled.EMPTY_BUFFER)
+                .addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
     }
 
     @Override
