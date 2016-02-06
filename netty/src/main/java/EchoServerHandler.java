@@ -1,8 +1,10 @@
+import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.util.ReferenceCountUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +20,11 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
         logger.info("Server received: " + msg);
 
 //        ctx.write(msg); // Write the received messages back . Be aware that this will not “flush” the messages to the remote peer yet.
-        ctx.pipeline().write(msg);
+        try {
+            ctx.pipeline().write(Unpooled.copiedBuffer((ByteBuf) msg));
+        } finally {
+            ReferenceCountUtil.release(msg);
+        }
     }
 
     @Override

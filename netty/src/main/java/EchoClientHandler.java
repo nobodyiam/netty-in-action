@@ -1,3 +1,4 @@
+import com.google.common.base.Charsets;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
@@ -31,7 +32,7 @@ public class EchoClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
-        logger.info("Client received: " + ByteBufUtil.hexDump(in.readBytes(in.readableBytes()))); // Log received message as hexdump
-
+        ByteBuf buf = in.readBytes(in.readableBytes());
+        logger.info("Client received: {}, hexdump: {}", buf.toString(Charsets.UTF_8), ByteBufUtil.hexDump(buf));
     }
 }
